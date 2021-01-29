@@ -9,3 +9,7 @@ And initialize the Memory class
 ```c#
 Memory _memory = new Memory(processname);
 ```
+Using ProcessModule
+```c#
+ProcessModule _module = _memory.Process.GetModule(modulename);
+```
