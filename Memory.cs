@@ -61,21 +61,21 @@ namespace System.Diagnostics
 
 
 
-        public Memory(string processname, string modulename, MemoryPermissions permissions = MemoryPermissions.All)
+        public Memory(string processname,  MemoryPermissions permissions = MemoryPermissions.All)
         {
             Permissions = permissions;
             Proc = Process.GetProcessesByName(processname).First();
             Handle = OpenProcess(2035711, false, this.Proc.Id);
         }
 
-        public Memory(Process process, string modulename, MemoryPermissions permissions = MemoryPermissions.All)
+        public Memory(Process process,  MemoryPermissions permissions = MemoryPermissions.All)
         {
             Permissions = permissions;
             Proc = process;
             Handle = OpenProcess(2035711, false, this.Proc.Id);
         }
 
-        public Memory(Process[] processes, string modulename, MemoryPermissions permissions = MemoryPermissions.All)
+        public Memory(Process[] processes,  MemoryPermissions permissions = MemoryPermissions.All)
         {
             Permissions = permissions;
             Proc = processes.First();
