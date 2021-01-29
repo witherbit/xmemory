@@ -24,9 +24,9 @@ namespace System.Diagnostics
 		}
 
 		// Token: 0x06000037 RID: 55 RVA: 0x00002CB4 File Offset: 0x00000EB4
-		public static Memory GetMemory(this Process process, string moduleName, MemoryPermissions permissions = MemoryPermissions.All)
+		public static Memory GetMemory(this Process process, MemoryPermissions permissions = MemoryPermissions.All)
 		{
-			return new Memory(process, moduleName, permissions);
+			return new Memory(process, permissions);
 		}
 	}
 }
