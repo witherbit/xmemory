@@ -12,7 +12,7 @@ namespace System.Diagnostics
     {
         public MemoryPermissions Permissions { get; private set; }
 
-        Process Proc;
+        public Process Process { get; private set; }
 
         /// <summary>
         /// Returns the process descriptor
@@ -25,7 +25,7 @@ namespace System.Diagnostics
         {
             get
             {
-                return Proc.ProcessName;
+                return Process.ProcessName;
             }
         }
         /// <summary>
@@ -35,7 +35,7 @@ namespace System.Diagnostics
         {
             get
             {
-                return Proc.Responding;
+                return Process.Responding;
             }
         }
         /// <summary>
@@ -64,22 +64,22 @@ namespace System.Diagnostics
         public Memory(string processname,  MemoryPermissions permissions = MemoryPermissions.All)
         {
             Permissions = permissions;
-            Proc = Process.GetProcessesByName(processname).First();
-            Handle = OpenProcess(2035711, false, this.Proc.Id);
+            Process = Process.GetProcessesByName(processname).First();
+            Handle = OpenProcess(2035711, false, this.Process.Id);
         }
 
         public Memory(Process process,  MemoryPermissions permissions = MemoryPermissions.All)
         {
             Permissions = permissions;
-            Proc = process;
-            Handle = OpenProcess(2035711, false, this.Proc.Id);
+            Process = process;
+            Handle = OpenProcess(2035711, false, this.Process.Id);
         }
 
         public Memory(Process[] processes,  MemoryPermissions permissions = MemoryPermissions.All)
         {
             Permissions = permissions;
-            Proc = processes.First();
-            Handle = OpenProcess(2035711, false, this.Proc.Id);
+            Process = processes.First();
+            Handle = OpenProcess(2035711, false, this.Process.Id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace System.Diagnostics
         /// </summary>
         public IntPtr FindPattern(string modulename, string pattern, int offset = 0)
         {
-            return this.FindPattern(Proc.GetModule(modulename), this.GetPattern(pattern), offset);
+            return this.FindPattern(Process.GetModule(modulename), this.GetPattern(pattern), offset);
         }
         /// <summary>
         /// Finds a pattern
