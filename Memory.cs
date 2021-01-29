@@ -10,8 +10,6 @@ namespace System.Diagnostics
 {
     public sealed class Memory
     {
-        public MemoryPermissions Permissions { get; private set; }
-
         public Process Process { get; private set; }
 
         /// <summary>
@@ -61,23 +59,20 @@ namespace System.Diagnostics
 
 
 
-        public Memory(string processname,  MemoryPermissions permissions = MemoryPermissions.All)
+        public Memory(string processname)
         {
-            Permissions = permissions;
             Process = Process.GetProcessesByName(processname).First();
             Handle = OpenProcess(2035711, false, this.Process.Id);
         }
 
-        public Memory(Process process,  MemoryPermissions permissions = MemoryPermissions.All)
+        public Memory(Process process)
         {
-            Permissions = permissions;
             Process = process;
             Handle = OpenProcess(2035711, false, this.Process.Id);
         }
 
-        public Memory(Process[] processes,  MemoryPermissions permissions = MemoryPermissions.All)
+        public Memory(Process[] processes)
         {
-            Permissions = permissions;
             Process = processes.First();
             Handle = OpenProcess(2035711, false, this.Process.Id);
         }
@@ -113,7 +108,6 @@ namespace System.Diagnostics
         /// </summary>
         public IntPtr FindPattern(IntPtr startAddress, IntPtr endAddress, byte[] pattern, int offset)
         {
-            if (Permissions != MemoryPermissions.All || Permissions != MemoryPermissions.Readonly) throw new Exception("Memory access denied: permission does not match the method being called");
             bool flag = pattern == null;
             if (flag)
             {
@@ -147,7 +141,6 @@ namespace System.Diagnostics
         /// <returns>Value</returns>
         public T Read<T>(int address)
         {
-            if (Permissions != MemoryPermissions.All || Permissions != MemoryPermissions.Readonly) throw new Exception("Memory access denied: permission does not match the method being called");
             byte[] array = new byte[Marshal.SizeOf<T>()];
             ReadProcessMemory(this.Handle, (IntPtr)address, array, Marshal.SizeOf<T>(), 0);
             return this.GetStruct<T>(array);
@@ -159,7 +152,6 @@ namespace System.Diagnostics
         /// <returns>Value</returns>
         public T Read<T>(IntPtr address)
         {
-            if (Permissions != MemoryPermissions.All || Permissions != MemoryPermissions.Readonly) throw new Exception("Memory access denied: permission does not match the method being called");
             byte[] array = new byte[Marshal.SizeOf<T>()];
             ReadProcessMemory(this.Handle, address, array, Marshal.SizeOf<T>(), 0);
             return this.GetStruct<T>(array);
@@ -169,7 +161,6 @@ namespace System.Diagnostics
         /// </summary>
         public string ReadString(int address, int bufferSize, Encoding enc)
         {
-            if (Permissions != MemoryPermissions.All || Permissions != MemoryPermissions.Readonly) throw new Exception("Memory access denied: permission does not match the method being called");
             byte[] array = new byte[bufferSize];
             ReadProcessMemory(this.Handle, (IntPtr)address, array, bufferSize, 0);
             string text = enc.GetString(array);
@@ -186,7 +177,6 @@ namespace System.Diagnostics
         /// <typeparam name="T">The type of data to write to memory</typeparam>
         public void Write<T>(IntPtr address, T value)
         {
-            if (Permissions != MemoryPermissions.All || Permissions != MemoryPermissions.Writeonly) throw new Exception("Memory access denied: permission does not match the method being called");
             int num = Marshal.SizeOf<T>();
             byte[] array = new byte[num];
             IntPtr intPtr = Marshal.AllocHGlobal(num);
@@ -201,7 +191,6 @@ namespace System.Diagnostics
         /// <typeparam name="T">The type of data to write to memory</typeparam>
         public void Write<T>(int address, T value)
         {
-            if (Permissions != MemoryPermissions.All || Permissions != MemoryPermissions.Writeonly) throw new Exception("Memory access denied: permission does not match the method being called");
             int num = Marshal.SizeOf<T>();
             byte[] array = new byte[num];
             IntPtr intPtr = Marshal.AllocHGlobal(num);
@@ -215,7 +204,6 @@ namespace System.Diagnostics
         /// </summary>
         public byte[] ReadBytes(int address, int length)
         {
-            if (Permissions != MemoryPermissions.All || Permissions != MemoryPermissions.Readonly) throw new Exception("Memory access denied: permission does not match the method being called");
             byte[] array = new byte[length];
             ReadProcessMemory(this.Handle, (IntPtr)address, array, length, 0);
             return array;
@@ -225,7 +213,6 @@ namespace System.Diagnostics
         /// </summary>
         public void WriteBytes(int address, byte[] value)
         {
-            if (Permissions != MemoryPermissions.All || Permissions != MemoryPermissions.Writeonly) throw new Exception("Memory access denied: permission does not match the method being called");
             WriteProcessMemory(this.Handle, (IntPtr)address, value, value.Length, 0);
         }
 

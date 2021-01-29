@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Ext.cs" />
     <Compile Include="Memory.cs" />
-    <Compile Include="MemoryPermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
