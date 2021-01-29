@@ -6,5 +6,5 @@ using System.Diagnostics;
 ```
 And initialize the Memory class
 ```c#
-    Memory _memory = new Memory(processname);
+Memory _memory = new Memory(processname);
 ```
