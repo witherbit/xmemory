@@ -1,5 +1,5 @@
 # xmemory
-**Disclaimer: the author is not responsible for possible side effects associated with the use of xmemory**
+**Disclaimer: the author is not responsible for any possible side effects associated with the use of "xmemory", as well as for the use of "xmemory" in illegal and other cases.**
 ____
 Connect System.Diagnostics:
 ```c#
